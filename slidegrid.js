@@ -25,6 +25,7 @@ slidegrid = {
     cellHeight: 150,
     padding: 30,
     gridOffset: 0,
+    inResize: false,
     
     /**
      * Adds a specific cell to the set of used cells.  Used cells are skipped 
@@ -292,7 +293,5 @@ slidegrid = {
                  }, 500);
              }
          });
-    },
-    
-    inResize: false,
+    }
 }
