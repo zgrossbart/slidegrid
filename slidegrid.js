@@ -126,9 +126,14 @@ slidegrid = {
             
             for (var i = 0; i < children.length; i++) {
                 if (children.eq(i).hasClass("bigcell")) {
-                    if (curCol === cols - 1) {
+                    if (curCol > 0 && curCol === cols - 1) {
                         /* 
-                         * This means it is time to bump down to the next row
+                         * This means that we are at a big cell and we're in the last column.  Since
+						 * big cells are two columns wide and we don't want this cell to hang off the 
+						 * edge then we want to artificially move down to the next row.  However, if 
+						 * this is a case where the total column width is only one column, this happens
+						 * when the window is very narrow, then we don't have any choice by to hang 
+						 * over the edge and we don't want to make an extra row worth of space.
                          */
                         curCol = 0;
                         curRow++;
@@ -152,8 +157,6 @@ slidegrid = {
                          */
                         i--;
                     } else {
-                        
-                        
                         slidegrid.styleCell(children.eq(i), x, y, (cellWidth * 2) + padding, (cellHeight * 2) + padding, slidegrid.hasDrawn);
                         /* 
                          * Big cells are twice as large as normal cells.  That means they 
@@ -233,7 +236,7 @@ slidegrid = {
                         slidegrid.styleCell(children.eq(i), x, y, cellWidth, cellHeight, slidegrid.hasDrawn);
                     }
                 }
-                
+
                 if ((count % cols) === 0) {
                     /* 
                      * This means it is time to bump down to the next row
@@ -242,12 +245,13 @@ slidegrid = {
                     curRow++;
                     x = padding / 2;
                     y += cellHeight + padding;
-                    hasTallCell = false;
+                    if (i != children.length - 1) {
+                        hasTallCell = false;
+                    }
                 } else {
                     x += cellWidth + padding;
                     curCol++;
                 }
-                
                 count++;
             }
             
@@ -261,7 +265,7 @@ slidegrid = {
             } else {
                 height = y + padding;
             }
-            
+
             if (hasTallCell) {
                 height += cellHeight + padding;
             }

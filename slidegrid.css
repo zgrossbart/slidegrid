@@ -3,5 +3,10 @@ body {
 }
 
 p {
-    padding: 2em
+    padding: 1em;
+}
+
+div.cell {
+	padding: 5px;
+	border-radius: 4px;
 }
